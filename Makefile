@@ -2,7 +2,7 @@ CC = gcc
 CFLAGS = -Wall -Werror -std=c99 -pedantic -Os
 LDFLAGS =
 
-SOURCES = log_main.c log_format.c
+SOURCES = log_main.c log_format.c log_read.c
 OBJECTS = $(SOURCES:.c=.o)
 EXE = logtastic
 

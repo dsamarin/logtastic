@@ -90,7 +90,7 @@ static struct format_token * parse_format_token_variable (char **input) {
 	return token;
 }
 
-struct format_token * parse_format_token (char **input) {
+static struct format_token * parse_format_token (char **input) {
 	struct format_token *token = NULL;
 
 	if (input && *input) {
@@ -107,3 +107,22 @@ struct format_token * parse_format_token (char **input) {
 
 	return token;
 }
+
+
+struct format_token * parse_log_format (char *format) {
+	struct format_token *head = NULL;
+	struct format_token *tail = NULL;
+	struct format_token *item = NULL;
+
+	while ((item = parse_format_token (&format))) {
+		if (!head) {
+			head = item;
+		} else {
+			tail->next = item;
+		}
+		tail = item;
+	}
+
+	return head;
+}
+

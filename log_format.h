@@ -27,6 +27,6 @@ struct format_token {
 	struct format_token *next;
 };
 
-struct format_token * parse_format_token (char **input);
+struct format_token * parse_log_format (char *format);
 
 #endif
