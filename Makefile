@@ -13,9 +13,10 @@ all: $(EXE)
 
 $(EXE): $(OBJECTS)
 	$(CC) $(LDFLAGS) $^ -o $(EXE)
+	rm -rf $(OBJECTS)
 
 .c.o:
 	$(CC) $(CFLAGS) -c $<
 
 clean:
-	rm -rf $(OBJECTS) $(EXE)
+	rm -rf $(EXE)
