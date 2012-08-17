@@ -10,26 +10,35 @@
 
 #define BUFFER_SIZE (4096)
 
-void parse_log_item (char *buffer) {
-	struct format_token *token = NULL;
+struct format_token * parse_log_format (char *format) {
+	struct format_token *head = NULL;
+	struct format_token *tail = NULL;
+	struct format_token *item = NULL;
 
-	char *format = buffer;
+	while ((item = parse_format_token (&format))) {
+		if (!head) {
+			head = item;
+		} else {
+			tail->next = item;
+		}
+		tail = item;
+	}
 
-	while ((token = parse_format_token (&format))) {
-		switch (token->type) {
+	item = head;
+	while (item) {
+		switch (item->type) {
 		case T_CHARACTER:
-			putchar (token->data.ch);
+			putchar (item->data.ch);
 			break;
 		case T_VARIABLE:
-			printf ("${%d}", token->data.var);
+			printf ("\x1b\x5b\x33\x35\x6d${%d}\x1b\x5b\x33\x39\x6d", item->data.var);
 			break;
-		default:
-			printf ("{unreachable}");
 		}
+		item = item->next;
 	}
 	putchar ('\n');
 
-	free (buffer);
+	return head;
 }
 
 void readlines (FILE *input, void (*emit)(char *)) {
@@ -80,6 +89,6 @@ void readlines (FILE *input, void (*emit)(char *)) {
 }
 
 int main(void) {
-	readlines (stdin, &parse_log_item);
+	parse_log_format ("$remote_addr - $remote_user [$time_local] \"$request\" $status $body_bytes_sent \"$http_referer\" \"$http_user_agent\"");
 	return 0;
 }

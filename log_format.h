@@ -24,6 +24,7 @@ struct format_token {
 		char ch;
 		enum format_token_variable var;
 	} data;
+	struct format_token *next;
 };
 
 struct format_token * parse_format_token (char **input);

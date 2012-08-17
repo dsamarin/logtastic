@@ -11,6 +11,7 @@ static struct format_token * create_format_token_ch (char ch) {
 	if (token) {
 		token->type = T_CHARACTER;
 		token->data.ch = ch;
+		token->next = NULL;
 	}
 	return token;
 }
@@ -20,6 +21,7 @@ static struct format_token * create_format_token_var (enum format_token_variable
 	if (token) {
 		token->type = T_VARIABLE;
 		token->data.var = var;
+		token->next = NULL;
 	}
 	return token;
 }
