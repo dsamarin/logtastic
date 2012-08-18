@@ -115,10 +115,10 @@ struct format_token * parse_log_format (char *format) {
 	struct format_token *item = NULL;
 
 	while ((item = parse_format_token (&format))) {
-		if (!head) {
-			head = item;
-		} else {
+		if (tail) {
 			tail->next = item;
+		} else {
+			head = item;
 		}
 		tail = item;
 	}
