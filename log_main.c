@@ -63,6 +63,4 @@ int main(void) {
 
 	item = parse_log_format (format);
 	log_read_lines (stdin, check_log_message, (void *) item);
-
-	return 0;
 }
